@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Inscription réussie</title>
+<style>
+body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg,#0f2027,#203a43,#2c5364); color: #fff; display:flex;justify-content:center;align-items:center;min-height:100vh;}
+.container { text-align:center; background: rgba(255,255,255,0.05); padding:50px; border-radius:20px; }
+a { color:#ffcc33; text-decoration:none; font-weight:600; }
+a:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Inscription réussie !</h1>
+<p>Vous pouvez maintenant vous connecter avec votre email.</p>
+<a href="{{ url_for('home') }}">Aller à la connexion</a>
+</div>
+</body>
+</html>

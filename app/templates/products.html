@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produits suivis - Price Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 30px; background: linear-gradient(90deg, #ffb347, #ffcc33); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        th { background: rgba(255,255,255,0.1); }
+        input[type="number"] { padding: 5px 10px; border-radius: 8px; border: none; outline: none; width: 80px; }
+        input[type="submit"] { padding: 8px 15px; border-radius: 10px; border: none; background: linear-gradient(90deg, #ffb347, #ffcc33); color: #000; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        input[type="submit"]:hover { transform: translateY(-2px); box-shadow: 0 3px 10px rgba(255,255,255,0.3); }
+        a { color: #ffcc33; text-decoration: none; font-weight: 600; }
+        a:hover { text-decoration: underline; }
+    overflow-x: auto; /* permet le scroll horizontal si table trop large */
+
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* align top pour scroll naturel */
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #fff;
+    padding: 20px; /* ajoute un peu d’espace autour */
+    overflow-y: auto; /* permet le scroll vertical si contenu trop grand */
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 50px 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+    width: 90%;
+    max-width: 1000px;
+    text-align: center;
+    animation: fadeIn 1.5s ease-out;
+    overflow-x: auto; /* scroll horizontal si table trop large */
+    max-height: 80vh; /* limite hauteur de la box à 80% de la fenêtre */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+    table-layout: fixed; /* colonnes fixes */
+    word-wrap: break-word;
+}
+
+td a {
+    word-break: break-all; /* coupe les URL longues */
+    display: inline-block;
+}
+
+
+        @keyframes fadeIn { 0% {opacity: 0; transform: scale(0.8);} 100% {opacity: 1; transform: scale(1);} }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Vos produits suivis</h1>
+        {% if products %}
+        <table border="1">
+    <thead>
+        <tr>
+            <th>Nom du produit</th>
+            <th>URL</th>
+            <th>Seuil (€)</th>
+            <th>Dernier prix scrappé</th>
+            <th>Modifier seuil</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in products %}
+        <tr>
+            <td>{{ p.product_name }}</td>
+            <td><a href="{{ p.url }}" target="_blank">{{ p.url }}</a></td>
+            <td>{{ p.seuil }}</td>
+            <td>{{ p.last_price if p.last_price else "N/A" }}</td>
+            <td>
+                <form action="/update_seuil/{{ p.id }}" method="POST">
+                    <input type="number" name="seuil" value="{{ p.seuil }}" required>
+                    <input type="submit" value="Mettre à jour">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+        {% else %}
+        <p>Vous ne suivez aucun produit pour le moment.</p>
+        {% endif %}
+        <a href="/choices">Retour aux choix</a>
+    </div>
+</body>
+</html>

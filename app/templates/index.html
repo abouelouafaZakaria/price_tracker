@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price Tracker</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            overflow: hidden;
+        }
+
+        /* Container */
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        /* Title Animation */
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            background: linear-gradient(90deg, #ffb347, #ffcc33);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: slideDown 1s ease-out;
+        }
+
+        /* Form Styles */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        input[type="text"],input[type="email"],input[type="number"] {
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus {
+            box-shadow: 0 0 10px #ffcc33;
+        }
+
+        input[type="submit"] {
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            background: #ffb347;
+            background: linear-gradient(90deg, #ffb347, #ffcc33);
+            color: #000;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background: linear-gradient(90deg, #ffcc33, #ffb347);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255,255,255,0.3);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% {opacity: 0; transform: scale(0.8);}
+            100% {opacity: 1; transform: scale(1);}
+        }
+
+        @keyframes slideDown {
+            0% {opacity: 0; transform: translateY(-30px);}
+            100% {opacity: 1; transform: translateY(0);}
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Bonjour {{mstr}} <br>Welcome to Price Tracker</h1>
+        <form action="/submit" method="POST">
+            <input type="text" name="url" placeholder="Entrez l'URL du produit" required>
+            <input type="text" name="nom" placeholder="Entrez nom du produit (optionnel)" >
+            <input type="number" name="seuil" placeholder="Entrez votre seuil (€)" required>
+            <input type="submit" value="Suivre le prix">
+        </form>
+    </div>
+
+</body>
+</html>

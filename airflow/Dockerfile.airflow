@@ -1,0 +1,21 @@
+# Utiliser l'image officielle Apache Airflow
+FROM apache/airflow:2.7.3-python3.11
+
+# Passer en root pour installer des paquets
+USER root
+
+# Installer les dépendances nécessaires pour le DAG
+RUN pip install --no-cache-dir psycopg2-binary requests beautifulsoup4 python-dotenv
+
+# Créer dossiers logs et plugins
+RUN mkdir -p /opt/airflow/logs /opt/airflow/plugins
+
+# Repasser en utilisateur airflow
+USER airflow
+WORKDIR /opt/airflow
+
+# Exposer le port web d'Airflow
+EXPOSE 8080
+
+# Commande par défaut pour bash (on ne lance pas encore le container)
+CMD ["bash"]

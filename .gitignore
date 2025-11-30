@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+
+# Flask
+app/__pycache__/
+
+# Airflow
+airflow/logs/
+airflow/__pycache__/
+airflow/plugins/__pycache__/
+
+# Docker volumes
+pgdata/
+
+# Env
+.env
