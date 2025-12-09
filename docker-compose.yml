@@ -40,6 +40,9 @@ services:
       - ./airflow/plugins:/opt/airflow/plugins
     depends_on:
       - postgres
-
+    command: >
+      bash -c "airflow db upgrade &&
+             airflow users create --username admin --firstname Admin --lastname User --role Admin --email admin@example.com --password admin &&
+             airflow scheduler & airflow webserver"
 volumes:
   pgdata:

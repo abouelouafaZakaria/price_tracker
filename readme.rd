@@ -1,10 +1,9 @@
-# Price Tracker & Airflow
+Price Tracker & Airflow
 
-Application Flask pour suivre les prix de produits et recevoir des alertes par email. Un DAG Airflow scrappe les prix depuis PostgreSQL et envoie un email si le prix atteint le seuil défini.
+Cette application Flask permet de suivre les prix de produits et d'envoyer des alertes par email lorsque les prix atteignent un seuil défini. Un DAG Airflow récupère les données depuis PostgreSQL et déclenche l'envoi des notifications.
 
-## Arborescence
+## Structure du projet
 
-```
 Price_tracker/
 │
 ├─ app/
@@ -26,26 +25,21 @@ Price_tracker/
 │
 ├─ docker-compose.yml
 └─ .env
-```
 
 ## Prérequis
 
-* Docker & Docker Compose
+* Docker et Docker Compose installés
 * Connexion internet pour télécharger les images
-* SMTP (pour l’envoi d’emails depuis le DAG)
+* SMTP configuré pour l’envoi des emails depuis le DAG
 
 ## Installation
 
 1. Cloner le projet :
-
-```bash
 git clone <ton-repo-github>
 cd Price_tracker
-```
 
-2. Créer un fichier `.env` avec les valeurs suivantes :
+2. Créer un fichier `.env` avec les valeurs nécessaires pour la base de données, Flask et l’email :
 
-```env
 # PostgreSQL
 POSTGRES_HOST=*****
 POSTGRES_USER=******
@@ -63,29 +57,27 @@ EMAIL_FROM=ton_email@gmail.com
 EMAIL_PASSWORD=mot_de_passe_application
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
-```
 
-> Ne jamais pousser `.env` sur GitHub.
+# Airflow
+AIRFLOW_PORT=8080
 
-## Lancer les containers
+## Lancement des containers
 
-```bash
 docker compose up --build
-```
 
-* Flask : [http://localhost:5000](http://localhost:5000)
-* Airflow : [http://localhost:8080](http://localhost:8080)
+* Flask : http://localhost:5000
+* Airflow : http://localhost:8080
 
 ## Bases de données
 
-* **Flask** : `price_tracker` (tables `users`, `tracking`, `scrap`)
-  Initialisation : `initdb/init.sql`
-* **Airflow** : `airflow_db` (tables internes)
-  Initialisation : `initdb/airflow.sql`
+* Flask : price_tracker (tables users, tracking, scrap)
+  Initialisation : initdb/init.sql
+* Airflow : airflow_db (tables internes)
+  Initialisation : initdb/airflow.sql
 
 ## DAG Airflow
 
-* Fichier : `airflow/dags/tracker_dag.py`
-* Fonction : scrapper les prix et envoyer un email si seuil atteint
-* Fréquence : toutes les heures (`@hourly`)
-* Variables SMTP et DB dans `.env`
+* Fichier : airflow/dags/tracker_dag.py
+* Fonction : scrapper les prix et envoyer un email si un seuil est atteint
+* Fréquence : toutes les heures (@hourly)
+* Les variables SMTP et DB sont définies dans .env
